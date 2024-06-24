@@ -34,11 +34,11 @@ Cara mengetest aplikasi kita dengan menggunakan postman
 Database : esport_event
 
 ```
-npm init -y
-npm i express pg sequelize
-npm i -D nodemon sequelize-cli
-touch .gitignore
-npx sequelize init
+npm init -y &&
+npm i express pg sequelize &&
+npm i -D nodemon sequelize-cli &&
+touch .gitignore &&
+npx sequelize init &&
 npx sequelize db:create
 ```
 
@@ -78,25 +78,19 @@ Table Managers
 | Column name     | type      | constraint |
 |-----------------|:---------:|:----------:|
 | name            | string    | not null   |
+| GameId          | integer   | not null   |
 
+```
+npx sequelize model:generate --name Manager --attributes name:string,GameId:integer
+```
 
-```
-npx sequelize model:generate --name Manager --attributes name:string
-```
-Sebelum di migrate, manager juga punya hubungan dengan game, kita gunakan migrasi tambahan untuk membuat foreign key di manager
-```
-npx sequelize migration:generate --name add-GameId-to-managers
-```
-```
-npx sequelize db:migrate
-```
 
 ## **Seeder**
 
 Buatlah sebuah seed file untuk memasukan data ke tabel `Games`, `Events` dan `Managers`. Data berasal dari folder data.
 ```
-npx sequelize seed:generate --name seeder-games
-npx sequelize seed:generate --name seeder-events
+npx sequelize seed:generate --name seeder-games &&
+npx sequelize seed:generate --name seeder-events &&
 npx sequelize seed:generate --name seeder-managers
 
 npx sequelize db:seed:all

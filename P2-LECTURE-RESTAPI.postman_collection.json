@@ -1,0 +1,213 @@
+{
+	"info": {
+		"_postman_id": "87e7262b-60b0-4627-bd8a-a5dd2fd47b33",
+		"name": "P2-LECTURE-RESTAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33858811"
+	},
+	"item": [
+		{
+			"name": "Read Games",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{url}}/games",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"games"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read Managers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/managers",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"managers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read Events",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/events",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Event",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\t{\n\t\t\"name\": \"test\",\n\t\t\"description\": \"Thank you to all the teams who competed during the season one global championship! We also want to give a huge shout out to all the fans who tuned in during Icons and made this event unforgettable. While this season has wrapped up, stay tuned for more Wild Rift esports announcements coming soon!\",\n\t\t\"totalPrize\": 20000000,\n\t\t\"eventPoster\": \"https://i.ytimg.com/vi/TrXQ6_LCBFU/maxresdefault.jpg\",\n\t\t\"eventDate\": \"2022-09-21\",\n\t\t\"eventType\": \"Offline\",\n\t\t\"eventStatus\": \"Active\",\n\t\t\"GameId\": 1\n\t}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/events",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read Detail Event",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/events/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"events",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Event",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/events/7",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"events",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Event",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\t{\n\t\t\"name\":\"bambang\",\n\t\t\"description\": \"Thank you to all the teams who competed during the season one global championship! We also want to give a huge shout out to all the fans who tuned in during Icons and made this event unforgettable. While this season has wrapped up, stay tuned for more Wild Rift esports announcements coming soon!\",\n\t\t\"totalPrize\": 20000000,\n\t\t\"eventPoster\": \"https://i.ytimg.com/vi/TrXQ6_LCBFU/maxresdefault.jpg\",\n\t\t\"eventDate\": \"2022-09-21\",\n\t\t\"eventType\": \"Offline\",\n\t\t\"GameId\": 2\n\t}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/events/6",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"events",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Event Status",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\t{\n\t\t\"eventStatus\": \"Active\"\n\t}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/events/6",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"events",
+						"6"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost:3000",
+			"type": "string"
+		}
+	]
+}
