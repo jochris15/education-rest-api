@@ -2,7 +2,7 @@
   "development": {
     "username": "postgres",
     "password": "postgres",
-    "database": "e_sport_event",
+    "database": "esport_event",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },

@@ -1,44 +1,17 @@
 const { Game, Event, Manager } = require('../models')
-class Controller {
-    static async readGames(req, res) {
+class EventController {
+    static async read(req, res) {
         try {
-            const games = await Game.findAll()
-
-            res.status(200).json({
-                message: 'Success read games',
-                games
+            const events = await Event.findAll({
+                include: {
+                    model: Game,
+                    include: Manager
+                }
             })
-        } catch (error) {
-            console.log(error);
-            res.status(500).json({
-                message: 'Internal Server Error'
-            })
-        }
-    }
-
-    static async readManagers(req, res) {
-        try {
-            const managers = await Manager.findAll()
-
-            res.status(200).json({
-                message: 'Success read managers',
-                managers
-            })
-        } catch (error) {
-            console.log(error);
-            res.status(500).json({
-                message: 'Internal Server Error'
-            })
-        }
-    }
-
-    static async readEvents(req, res) {
-        try {
-            const events = await Event.findAll()
 
             res.status(200).json({
                 message: 'Success read events',
-                events
+                data: events
             })
         } catch (error) {
             console.log(error);
@@ -48,14 +21,14 @@ class Controller {
         }
     }
 
-    static async addEvents(req, res) {
+    static async create(req, res) {
         try {
             const { name, description, totalPrize, eventPoster, eventDate, eventType, eventStatus, GameId } = req.body
             const event = await Event.create({ name, description, totalPrize, eventPoster, eventDate, eventType, eventStatus, GameId })
 
             res.status(201).json({
                 message: "Success create new event",
-                event
+                data: event
             })
         } catch (error) {
             console.log(error);
@@ -83,7 +56,7 @@ class Controller {
         }
     }
 
-    static async readDetailEvent(req, res) {
+    static async readDetail(req, res) {
         try {
             const { id } = req.params
             const event = await Event.findByPk(id)
@@ -94,7 +67,7 @@ class Controller {
 
             res.status(200).json({
                 message: `Success read event with id ${event.id}`,
-                event
+                data: event
             })
         } catch (error) {
             console.log(error);
@@ -112,7 +85,7 @@ class Controller {
         }
     }
 
-    static async deleteEvent(req, res) {
+    static async delete(req, res) {
         try {
             const { id } = req.params
 
@@ -122,11 +95,7 @@ class Controller {
                 throw ({ name: "NotFound", id })
             }
 
-            await Event.destroy({
-                where: {
-                    id
-                }
-            })
+            await event.destroy()
 
             res.status(200).json({
                 message: `Success delete event with id ${id}`
@@ -147,7 +116,7 @@ class Controller {
         }
     }
 
-    static async editEvent(req, res) {
+    static async update(req, res) {
         try {
             const { id } = req.params
             const event = await Event.findByPk(id)
@@ -158,14 +127,11 @@ class Controller {
 
             const { name, description, totalPrize, eventPoster, eventDate, eventType, eventStatus, GameId } = req.body
 
-            await Event.update({ name, description, totalPrize, eventPoster, eventDate, eventType, eventStatus, GameId }, {
-                where: {
-                    id
-                }
-            })
+            await event.update({ name, description, totalPrize, eventPoster, eventDate, eventType, eventStatus, GameId })
 
             res.status(200).json({
-                message: `Success edit event with id ${id}`
+                message: `Success edit event with id ${id}`,
+                data: event
             })
         } catch (error) {
             console.log(error);
@@ -209,14 +175,11 @@ class Controller {
 
             const { eventStatus } = req.body
 
-            await Event.update({ eventStatus }, {
-                where: {
-                    id
-                }
-            })
+            await event.update({ eventStatus })
 
             res.status(200).json({
-                message: `Success edit event with id ${id}`
+                message: `Success edit event status with id ${id}`,
+                status: event.eventStatus
             })
         } catch (error) {
             console.log(error);
@@ -244,4 +207,4 @@ class Controller {
     }
 }
 
-module.exports = Controller
+module.exports = EventController
