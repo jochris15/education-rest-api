@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.Game, { foreignKey: 'GameId' })
+      Event.belongsTo(models.Game, { foreignKey: "GameId" })
     }
   }
   Event.init({
@@ -19,98 +19,21 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notNull: {
-          msg: "Name required"
-        },
         notEmpty: {
           msg: "Name required"
+        },
+        notNull: {
+          msg: "Name required"
         }
       }
     },
-    description: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: "Description required"
-        },
-        notEmpty: {
-          msg: "Description required"
-        }
-      }
-    },
-    totalPrize: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: "totalPrize required"
-        },
-        notEmpty: {
-          msg: "totalPrize required"
-        }
-      }
-    },
-    eventPoster: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: "Poster required"
-        },
-        notEmpty: {
-          msg: "Poster required"
-        }
-      }
-    },
-    eventDate: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: "Date required"
-        },
-        notEmpty: {
-          msg: "Date required"
-        }
-      }
-    },
-    eventType: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: "Type required"
-        },
-        notEmpty: {
-          msg: "Type required"
-        }
-      }
-    },
-    eventStatus: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: "Status required"
-        },
-        notEmpty: {
-          msg: "Status required"
-        }
-      }
-    },
-    GameId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: "Game required"
-        },
-        notEmpty: {
-          msg: "Game required"
-        }
-      }
-    }
+    description: DataTypes.TEXT,
+    totalPrize: DataTypes.STRING,
+    eventPoster: DataTypes.STRING,
+    eventDate: DataTypes.DATE,
+    eventType: DataTypes.STRING,
+    eventStatus: DataTypes.STRING,
+    GameId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Event',

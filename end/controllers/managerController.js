@@ -1,4 +1,4 @@
-const { Game, Manager } = require('../models')
+const { Game, Event, Manager } = require('../models')
 
 class ManagerController {
     static async read(req, res) {
@@ -8,17 +8,17 @@ class ManagerController {
             })
 
             res.status(200).json({
-                message: 'Success read managers',
-                data: managers
+                message: "Succeed read manager",
+                managers
             })
         } catch (error) {
             console.log(error);
+
             res.status(500).json({
-                message: 'Internal Server Error'
+                message: "Internal server error"
             })
         }
     }
-
 }
 
 module.exports = ManagerController

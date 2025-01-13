@@ -8,17 +8,17 @@ class GameController {
             })
 
             res.status(200).json({
-                message: 'Success read games',
-                data: games
+                message: "Succeed read games",
+                games
             })
         } catch (error) {
             console.log(error);
+
             res.status(500).json({
-                message: 'Internal Server Error'
+                message: "Internal server error"
             })
         }
     }
-
 }
 
 module.exports = GameController

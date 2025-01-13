@@ -12,12 +12,13 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    const events = require('../data/events.json')
-    events.forEach(el => {
+    const managers = require('../data/managers.json')
+    managers.forEach((el) => {
       delete el.id
-      el.createdAt = el.updatedAt = new Date()
+      el.updatedAt = el.createdAt = new Date()
     })
-    await queryInterface.bulkInsert('Events', events, {})
+
+    await queryInterface.bulkInsert('Managers', managers, {})
   },
 
   async down(queryInterface, Sequelize) {
@@ -27,6 +28,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    await queryInterface.bulkDelete('Events', null, {})
+    await queryInterface.bulkDelete('Managers', null, {})
   }
 };

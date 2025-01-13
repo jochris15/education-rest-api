@@ -10,34 +10,43 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       description: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
+        allowNull: false
       },
       totalPrize: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       eventPoster: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       eventDate: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull: false
       },
       eventType: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: "online"
       },
       eventStatus: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       GameId: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: "Games",
           key: "id"
         },
-        onDelete: 'cascade',
-        onUpdate: 'cascade'
+        onDelete: "cascade",
+        onUpdate: "cascade"
       },
       createdAt: {
         allowNull: false,

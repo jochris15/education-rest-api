@@ -1,4 +1,5 @@
 const { Game, Event, Manager } = require('../models')
+
 class EventController {
     static async read(req, res) {
         try {
@@ -10,13 +11,14 @@ class EventController {
             })
 
             res.status(200).json({
-                message: 'Success read events',
-                data: events
+                message: "Succeed read events",
+                events
             })
         } catch (error) {
             console.log(error);
+
             res.status(500).json({
-                message: 'Internal Server Error'
+                message: "Internal server error"
             })
         }
     }
@@ -24,30 +26,27 @@ class EventController {
     static async create(req, res) {
         try {
             const { name, description, totalPrize, eventPoster, eventDate, eventType, eventStatus, GameId } = req.body
+
             const event = await Event.create({ name, description, totalPrize, eventPoster, eventDate, eventType, eventStatus, GameId })
 
             res.status(201).json({
-                message: "Success create new event",
-                data: event
+                message: "Succeed create new data",
+                event
             })
         } catch (error) {
-            console.log(error);
+            let message = "Internal server error"
             let status = 500
-            let message = 'Internal Server Error'
 
-            if (error.name == 'SequelizeValidationError') {
-                status = 400
+            console.log(error);
+
+            if (error.name === "SequelizeValidationError") {
                 message = error.errors[0].message
+                status = 400
             }
 
-            if (error.name == 'SequelizeDatabaseError') {
+            if (error.name === "SequelizeDatabaseError") {
+                message = "Invalid data type"
                 status = 400
-                message = 'Invalid input'
-            }
-
-            if (error.name == 'SequelizeForeignKeyConstraintError') {
-                status = 400
-                message = 'Invalid input'
             }
 
             res.status(status).json({
@@ -56,27 +55,24 @@ class EventController {
         }
     }
 
-    static async readDetail(req, res) {
+    static async readById(req, res) {
         try {
             const { id } = req.params
             const event = await Event.findByPk(id)
 
-            if (!event) {
-                throw ({ name: "NotFound", id })
-            }
+            if (!event) throw { name: "NotFound" }
 
             res.status(200).json({
-                message: `Success read event with id ${event.id}`,
-                data: event
+                message: "Succeed read data detail",
+                event
             })
         } catch (error) {
-            console.log(error);
+            let message = "Internal server error"
             let status = 500
-            let message = 'Internal Server Error'
 
-            if (error.name == 'NotFound') {
+            if (error.name === 'NotFound') {
+                message = "Data not found"
                 status = 404
-                message = `Data with id ${error.id} not found`
             }
 
             res.status(status).json({
@@ -91,23 +87,21 @@ class EventController {
 
             const event = await Event.findByPk(id)
 
-            if (!event) {
-                throw ({ name: "NotFound", id })
-            }
+            if (!event) throw { name: "NotFound" }
 
             await event.destroy()
 
             res.status(200).json({
-                message: `Success delete event with id ${id}`
+                message: "Delete succeed",
+                event
             })
         } catch (error) {
-            console.log(error);
+            let message = "Internal server error"
             let status = 500
-            let message = 'Internal Server Error'
 
-            if (error.name == 'NotFound') {
+            if (error.name === 'NotFound') {
+                message = "Data not found"
                 status = 404
-                message = `Data with id ${error.id} not found`
             }
 
             res.status(status).json({
@@ -119,43 +113,35 @@ class EventController {
     static async update(req, res) {
         try {
             const { id } = req.params
+
             const event = await Event.findByPk(id)
 
-            if (!event) {
-                throw ({ name: "NotFound", id })
-            }
+            if (!event) throw { name: "NotFound" }
 
             const { name, description, totalPrize, eventPoster, eventDate, eventType, eventStatus, GameId } = req.body
-
             await event.update({ name, description, totalPrize, eventPoster, eventDate, eventType, eventStatus, GameId })
 
             res.status(200).json({
-                message: `Success edit event with id ${id}`,
-                data: event
+                message: "update succeed",
+                event
             })
         } catch (error) {
-            console.log(error);
+            let message = "Internal server error"
             let status = 500
-            let message = 'Internal Server Error'
 
-            if (error.name == 'SequelizeValidationError') {
-                status = 400
+            if (error.name === "SequelizeValidationError") {
                 message = error.errors[0].message
-            }
-
-            if (error.name == 'SequelizeDatabaseError') {
                 status = 400
-                message = 'Invalid input'
             }
 
-            if (error.name == 'SequelizeForeignKeyConstraintError') {
+            if (error.name === "SequelizeDatabaseError") {
+                message = "Invalid data type"
                 status = 400
-                message = 'Invalid input'
             }
 
-            if (error.name == 'NotFound') {
+            if (error.name === 'NotFound') {
+                message = "Data not found"
                 status = 404
-                message = `Data with id ${error.id} not found`
             }
 
             res.status(status).json({
@@ -167,37 +153,36 @@ class EventController {
     static async updateStatus(req, res) {
         try {
             const { id } = req.params
+
             const event = await Event.findByPk(id)
 
-            if (!event) {
-                throw ({ name: "NotFound", id })
-            }
+            if (!event) throw { name: "NotFound" }
 
             const { eventStatus } = req.body
 
             await event.update({ eventStatus })
 
             res.status(200).json({
-                message: `Success edit event status with id ${id}`,
-                status: event.eventStatus
+                message: "update status succeed",
+                event
             })
         } catch (error) {
-            console.log(error);
+            let message = "Internal server error"
             let status = 500
-            let message = 'Internal Server Error'
-            if (error.name == 'SequelizeValidationError') {
-                status = 400
+
+            if (error.name === "SequelizeValidationError") {
                 message = error.errors[0].message
-            }
-
-            if (error.name == 'SequelizeDatabaseError') {
                 status = 400
-                message = 'Invalid input'
             }
 
-            if (error.name == 'NotFound') {
+            if (error.name === "SequelizeDatabaseError") {
+                message = "Invalid data type"
+                status = 400
+            }
+
+            if (error.name === 'NotFound') {
+                message = "Data not found"
                 status = 404
-                message = `Data with id ${error.id} not found`
             }
 
             res.status(status).json({
