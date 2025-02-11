@@ -4,12 +4,20 @@ class ManagerController {
     static async read(req, res) {
         try {
             const managers = await Manager.findAll({
-                include: Game
+                include: {
+                    model: Game,
+                    attributes: {
+                        exclude: ["createdAt", "updatedAt"]
+                    }
+                },
+                attributes: {
+                    exclude: ["createdAt", "updatedAt"]
+                }
             })
 
             res.status(200).json({
                 message: "Succeed read manager",
-                managers
+                data: managers
             })
         } catch (error) {
             console.log(error);

@@ -4,12 +4,28 @@ class GameController {
     static async read(req, res) {
         try {
             const games = await Game.findAll({
-                include: [Event, Manager]
+                include: [
+                    {
+                        model: Event,
+                        attributes: {
+                            exclude: ["createdAt", "updatedAt"]
+                        }
+                    },
+                    {
+                        model: Manager,
+                        attributes: {
+                            exclude: ["createdAt", "updatedAt"]
+                        }
+                    }
+                ],
+                attributes: {
+                    exclude: ["createdAt", "updatedAt"]
+                }
             })
 
             res.status(200).json({
                 message: "Succeed read games",
-                games
+                data: games
             })
         } catch (error) {
             console.log(error);

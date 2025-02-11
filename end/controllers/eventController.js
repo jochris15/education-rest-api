@@ -6,13 +6,24 @@ class EventController {
             const events = await Event.findAll({
                 include: {
                     model: Game,
-                    include: Manager
+                    include: {
+                        model: Manager,
+                        attributes: {
+                            exclude: ["createdAt", "updatedAt"]
+                        }
+                    },
+                    attributes: {
+                        exclude: ["createdAt", "updatedAt"]
+                    }
+                },
+                attributes: {
+                    exclude: ["createdAt", "updatedAt"]
                 }
             })
 
             res.status(200).json({
                 message: "Succeed read events",
-                events
+                data: events
             })
         } catch (error) {
             console.log(error);
@@ -29,9 +40,12 @@ class EventController {
 
             const event = await Event.create({ name, description, totalPrize, eventPoster, eventDate, eventType, eventStatus, GameId })
 
+            delete event.dataValues.createdAt
+            delete event.dataValues.updatedAt
+
             res.status(201).json({
                 message: "Succeed create new data",
-                event
+                data: event
             })
         } catch (error) {
             let message = "Internal server error"
@@ -58,13 +72,17 @@ class EventController {
     static async readById(req, res) {
         try {
             const { id } = req.params
-            const event = await Event.findByPk(id)
+            const event = await Event.findByPk(id, {
+                attributes: {
+                    exclude: ["createdAt", "updatedAt"]
+                }
+            })
 
             if (!event) throw { name: "NotFound" }
 
             res.status(200).json({
                 message: "Succeed read data detail",
-                event
+                data: event
             })
         } catch (error) {
             let message = "Internal server error"
@@ -114,16 +132,21 @@ class EventController {
         try {
             const { id } = req.params
 
-            const event = await Event.findByPk(id)
+            const event = await Event.findByPk(id, {
+                attributes: {
+                    exclude: ["createdAt", "updatedAt"]
+                }
+            })
 
             if (!event) throw { name: "NotFound" }
 
-            const { name, description, totalPrize, eventPoster, eventDate, eventType, eventStatus, GameId } = req.body
-            await event.update({ name, description, totalPrize, eventPoster, eventDate, eventType, eventStatus, GameId })
+            const { name, description, totalPrize, eventPoster, eventDate, eventType, GameId } = req.body
+
+            await event.update({ name, description, totalPrize, eventPoster, eventDate, eventType, GameId })
 
             res.status(200).json({
                 message: "update succeed",
-                event
+                data: event
             })
         } catch (error) {
             let message = "Internal server error"
@@ -154,7 +177,11 @@ class EventController {
         try {
             const { id } = req.params
 
-            const event = await Event.findByPk(id)
+            const event = await Event.findByPk(id, {
+                attributes: {
+                    exclude: ["createdAt", "updatedAt"]
+                }
+            })
 
             if (!event) throw { name: "NotFound" }
 
@@ -164,7 +191,7 @@ class EventController {
 
             res.status(200).json({
                 message: "update status succeed",
-                event
+                status: event.eventStatus
             })
         } catch (error) {
             let message = "Internal server error"
